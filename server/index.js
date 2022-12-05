@@ -7,9 +7,10 @@ import {validationResult} from 'express-validator';
 import { registerValidator} from "./validations/auth.js";
 
 import UserModel from './models/User.js'
+import { dbUrl } from './private.js';
 
 mongoose
-.connect('mongodb+srv://admin:streamwest@cluster0.dx8qnrv.mongodb.net/sber?retryWrites=true&w=majority')
+.connect(dbUrl)
 .then(() => console.log('DB OK'))
 .catch((err) => console.log('DB error', err));
 
