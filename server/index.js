@@ -7,7 +7,7 @@ import { registerValidator} from "./validations/auth.js";
 import checkAuth from './utils/checkAuth.js'
 import { dbUrl } from './private.js';
 
-import * as UserController from './controllers/UserController'
+import {login, register, profile} from './controllers/UserController.js'
 
 mongoose
 .connect(dbUrl)
@@ -18,11 +18,11 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/login', UserController.login);
+app.post('/auth/login', login);
 
-app.post('/auth/register', registerValidator, UserController.register);
+app.post('/auth/register', registerValidator, register);
 
-app.get('/auth/profile', checkAuth, UserController.profile);
+app.get('/auth/profile', checkAuth, profile);
 
 app.listen(8080, (err) =>{
     if (err){
