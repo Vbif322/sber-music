@@ -1,12 +1,13 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import {validationResult} from 'express-validator';
 
 import { registerValidator} from "./validations/auth.js";
 
 import UserModel from './models/User.js'
+import checkAuth from './utils/checkAuth.js'
 import { dbUrl } from './private.js';
 
 mongoose
@@ -60,7 +61,7 @@ app.post('/auth/login', async (req, res) => {
     }
 });
 
-app.post('/auth/register', registerValidator, async (req,res) => {
+app.post('/auth/register', registerValidator, async (req, res) => {
     try {
         const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -104,7 +105,7 @@ app.post('/auth/register', registerValidator, async (req,res) => {
     }
 });
 
-app.get('/auth/profile', (req,res) => {
+app.get('/auth/profile', checkAuth, (req, res) => {
     try {
 
     } catch (err) {}
